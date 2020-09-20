@@ -1,0 +1,58 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: fks-bank
+  profiles:
+    active: dev
+  data:
+    rest:
+      defaultMediaType: application/json
+    web:
+      pageable:
+        default-page-size: 25
+  flyway:
+    enabled: true
+  jackson:
+    default-property-inclusion: non_null
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+  rabbitmq:
+    virtualhost: /
+    addresses: localhost:5672
+    username: rabbitmq
+    password: rabbitmq
+    connection-factory-name: DEV-fks-bank
+    exchange: fksbank.topic
+    queue:
+      creditcard-purchase:
+        name: rk.creditcard.purchase
+      userprofile-creation:
+        name: rk.userprofile.creation
+
+file:
+  upload:
+    folder: ${HOME}/fksbank/upload
+
+logging:
+  level:
+    org:
+      springframework:
+        web: INFO
+      hibernate: ERROR
+  file: ${HOME}/fksbank/fksbank.log
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
